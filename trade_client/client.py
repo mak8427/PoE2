@@ -184,6 +184,8 @@ class TradeClient:
             search_id, cfg.live_on_item_callback
         )
 
+
+
         wsapp = websocket.WebSocketApp(
             self._build_livesearch_url(search_id),
             on_open=lambda ws: print(f"Starting livesearch for {cfg.item_name}"),
