@@ -22,7 +22,7 @@ def main():
     client = TradeClient(conf)
 
     # Example search config: searching for "Tabula Rasa" "Simple Robe"
-    search_cfg = SearchConfig(item_name="Tabula Rasa", item_type="Simple Robe")
+    search_cfg = SearchConfig(item_name="Obern's Bastion", item_type="Stacked Sabatons")
 
     # Perform the initial search
     search_res = client.search(search_cfg)
@@ -30,11 +30,25 @@ def main():
         print("No items found for the given search.")
         return
 
-    # Extract the query_id and the entire list of result IDs
-    query_id = search_res["id"]
-    all_result_ids = search_res["result"]
-    total = len(all_result_ids)
-    print(f"Found {total} items. Fetching them all...")
+
+    # Check if 'id' is in search_res
+    print(search_res)
+    if 'id' not in search_res:
+        print("No 'id' found in response. This looks like a fetch response rather than a search response.")
+        # Handle the fetch response format here
+        all_items = search_res.get("result", [])
+        total = len(all_items)
+        print(f"Found {total} items.")
+        # Process all_items directly if this is what you intend to do
+        return
+    else:
+        # This is a proper search response
+        query_id = search_res["id"]
+        all_result_ids = search_res["result"]
+        total = len(all_result_ids)
+        print(f"Found {total} items. Fetching them all...")
+        # Proceed with fetching items by query_id
+
 
     # The API only returns up to 10 items per fetch request
     page_size = 10

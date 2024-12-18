@@ -5,6 +5,7 @@ from typing import Callable, TypeVar, List, Dict, Any
 
 import requests
 import websocket
+from bokeh.core.serialization import DataType
 
 from .models import (
     OnlineStatus,
@@ -90,13 +91,11 @@ class TradeClient:
         self._logger.debug(f"Request to send\n{req.__dict__}\n")
         res = self._sess.send(req.prepare(), allow_redirects=True)
         self._logger.debug(f"Full response {res.__dict__}")
-
-        if raise_error:
+        if raise_error :
             try:
                 res.raise_for_status()
             except requests.HTTPError as e:
                 self._logger.error(f"HTTPError: {e}")
-                raise
         return res
 
     def _search(self, req: TradeRequest) -> SearchResponse:
