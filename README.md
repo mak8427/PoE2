@@ -2,6 +2,7 @@ Here's a rewritten and improved README following standard conventions:
 
 ---
 
+
 # Path of Exile 2 Trade Client
 
 ## Overview
